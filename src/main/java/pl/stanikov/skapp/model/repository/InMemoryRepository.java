@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static pl.stanikov.skapp.utils.Ids.getNewId;
+
 public class InMemoryRepository implements KnightRepository {
 
 
@@ -20,7 +22,7 @@ public class InMemoryRepository implements KnightRepository {
     @Override
     public void createKnight(String name, int age){
         Knight newKnight = new Knight(name, age);
-        newKnight.setId(getNewId());
+        newKnight.setId(getNewId(knights));
         knights.put(newKnight.getId(), newKnight);
     }
 
@@ -46,7 +48,6 @@ public class InMemoryRepository implements KnightRepository {
     @Override
     @PostConstruct
     public void build(){
-        createKnight("Lancelot", 29);
         createKnight("Stanikov", 20);
     }
 
@@ -62,14 +63,8 @@ public class InMemoryRepository implements KnightRepository {
                 '}';
     }
 
-    public int getNewId(){
-        if(knights.isEmpty()){
-            return 0;
-        }
-        else {
-            Integer pom = knights.keySet().stream().max(Integer::max).get();
-            System.out.println(pom);
-            return pom+1;
-        }
+    @Override
+    public void updateKnight(int id, Knight knight) {
+        knights.put(id,knight);
     }
 }

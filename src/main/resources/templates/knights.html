@@ -9,12 +9,17 @@
 </head>
 <body>
 <div class="container">
+
+    Posiadane zloto: <span th:text="${playerInformation.gold}"></span>
+    <a th:href="${'/checkQuests'}">Aktualizuj zadania</a>
+
     <p th:text="${hello}"/>
     <table class="table">
         <thead>
         <tr>
             <td>Imie rycerza</td>
             <td>Poziom</td>
+            <td>Zadanie</td>
             <td></td>
         </tr>
         </thead>
@@ -22,7 +27,12 @@
         <tr>
             <td th:text="${knight.getName()}"></td>
             <td th:text="${knight.level}"></td>
+            <td>
+                <span th:if="${knight.quest==null}">Brak zadania <a th:href="${'/assignQuest?knightId='+knight.id}">Przypisz zadanie</a></span>
+                <span th:if="${knight.quest!=null}" th:text="${knight.quest.description}"/>
+            </td>
             <td><a th:href="${'/knight?id='+knight.id}">Podglad</a> </td>
+            <td><a th:href="${'/knight/delete/'+knight.id}">Usun</a> </td>
         </tr>
         </tbody>
     </table>

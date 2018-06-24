@@ -3,29 +3,29 @@ package pl.stanikov.skapp.model.repository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import pl.stanikov.skapp.model.Quest;
+import pl.stanikov.skapp.utils.Ids;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Repository
 public class QuestRepository {
 
     Random rand=new Random();
 
-    List<Quest> questList = new ArrayList<>();
+    Map<Integer, Quest> quests = new HashMap<>();
 
     public void createQuest(String description){
-        questList.add(new Quest(description));
+        int questId = Ids.getNewIdQuest(quests);
+        quests.put(questId, new Quest(questId, description));
     }
 
     public List<Quest> getAll(){
-        return questList;
+        return new ArrayList<>(quests.values());
     }
 
     public void removeQuest(Quest quest){
-        questList.remove(quest);
+        quests.remove(quest.getId());
     }
 
     @PostConstruct
@@ -36,7 +36,7 @@ public class QuestRepository {
     @Override
     public String toString() {
         return "QuestRepository{" +
-                "questList=" + questList +
+                "quests=" + quests +
                 '}';
     }
 
@@ -52,5 +52,13 @@ public class QuestRepository {
         String pom = descriptions.get(rand.nextInt(descriptions.size()));
         System.out.println("Utworzono: "+ pom);
         createQuest(descriptions.get(rand.nextInt(descriptions.size())));
+    }
+
+    public void update(Quest pomQuest) {
+        quests.put(pomQuest.getId(),pomQuest);
+    }
+
+    public Quest getQuest(Integer id) {
+        return quests.get(id);
     }
 }

@@ -18,4 +18,8 @@ public interface KnightRepository {
     void build();
 
     Knight getKnightById(Integer id);
+
+    default void updateKnight(int id, Knight knight){
+
+    }
 }
