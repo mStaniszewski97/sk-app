@@ -3,6 +3,7 @@ package pl.stanikov.skapp.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,23 +37,15 @@ public class QuestController {
 }
 
     @RequestMapping(value = "/assignQuest", method = RequestMethod.POST)
-    public String assignQuest(Knight knight){
+    public String assignQuest(Knight knight, BindingResult result){
+        System.out.println(result);
         knightService.updateKnight(knight);
-        Quest pomQuest = knight.getQuest();
-        questService.update(pomQuest);
         return "redirect:/knights";
     }
 
     @RequestMapping(value = "/checkQuests")
     public String checkQuest(){
-        List<Knight> allKnights = knightService.getAllKnights();
-        allKnights.forEach(knight -> {
-            knight.getQuest().isCompleted();
-                }
-        );
-        int currentGold = playerInformation.getGold();
-
-        playerInformation.setGold(currentGold + knightService.collectRewards());
+        knightService.getMyGold();
 
         return "redirect:/knights";
     }

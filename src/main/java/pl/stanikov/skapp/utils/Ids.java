@@ -15,7 +15,6 @@ public class Ids {
             int licz=0;
             for (Map.Entry<Integer, Knight> test:keys.entrySet()) {
                 licz = test.getKey();
-                System.out.println(licz);
             }
             licz=licz+1;
             return licz;
@@ -30,7 +29,6 @@ public class Ids {
             int licz=0;
             for (Map.Entry<Integer, Quest> test:keys.entrySet()) {
                 licz = test.getKey();
-                System.out.println(licz);
             }
             licz=licz+1;
             return licz;

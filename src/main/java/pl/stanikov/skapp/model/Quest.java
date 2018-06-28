@@ -1,7 +1,6 @@
 package pl.stanikov.skapp.model;
 
 
-import jdk.vm.ci.meta.Local;
 
 import java.time.LocalDateTime;
 
